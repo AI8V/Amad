@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>نظام إدارة البيانات</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>   <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="text-center">
+            <div class="spinner-custom"></div>
+            <p class="mt-3 text-muted">جاري تحميل البيانات...</p>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-database-fill me-2"></i>
+                نظام إدارة البيانات
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="loadData()">
+                            <i class="bi bi-house-fill me-1"></i> الرئيسية
+                        </a>
+                    </li>
+<li class="nav-item">
+                        <a class="nav-link active" href="analytics.html">
+                            <i class="bi bi-graph-up me-1"></i> التحليلات
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addModal">
+                            <i class="bi bi-plus-circle-fill me-1"></i> إضافة جديد
+                        </a>
+                    </li>
+                </ul>
+                <button class="btn btn-light btn-sm" onclick="refreshData()">
+                    <i class="bi bi-arrow-clockwise me-1"></i> تحديث
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <!-- Statistics Cards -->
+        <div class="row g-4 mb-4" id="statsContainer">
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon blue">
+                            <i class="bi bi-building"></i>
+                        </div>
+                        <div class="me-3">
+                            <div class="stat-value" id="totalRecords">0</div>
+                            <div class="stat-label">إجمالي السجلات</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon green">
+                            <i class="bi bi-tags"></i>
+                        </div>
+                        <div class="me-3">
+                            <div class="stat-value" id="totalCategories">0</div>
+                            <div class="stat-label">الفئات</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon orange">
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <div class="me-3">
+                            <div class="stat-value" id="avgRating">0</div>
+                            <div class="stat-label">متوسط التقييم</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon purple">
+                            <i class="bi bi-chat-dots-fill"></i>
+                        </div>
+                        <div class="me-3">
+                            <div class="stat-value" id="totalReviews">0</div>
+                            <div class="stat-label">المراجعات</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search & Filter Section -->
+        <div class="search-section">
+            <div class="row g-3 align-items-end">
+                <div class="col-lg-5 col-md-6">
+                    <label class="form-label fw-bold">
+                        <i class="bi bi-search me-1"></i> البحث
+                    </label>
+                    <input type="text" class="form-control search-input" id="searchInput" 
+                           placeholder="ابحث عن اسم، عنوان، هاتف..." onkeyup="handleSearch()">
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label fw-bold">
+                        <i class="bi bi-funnel me-1"></i> الفئة
+                    </label>
+                    <select class="form-select search-input" id="categoryFilter" onchange="handleCategoryFilter()">
+                        <option value="">جميع الفئات</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label fw-bold">
+                        <i class="bi bi-sort-down me-1"></i> الترتيب
+                    </label>
+                    <select class="form-select search-input" id="sortBy" onchange="handleSort()">
+                        <option value="name">الاسم</option>
+                        <option value="rating">التقييم</option>
+                        <option value="reviews">المراجعات</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <button class="btn btn-primary w-100" style="border-radius: 12px; padding: 0.75rem;" onclick="resetFilters()">
+                        <i class="bi bi-x-circle me-1"></i> إعادة تعيين
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table table-hover" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>الاسم</th>
+                            <th>العنوان</th>
+                            <th>الهاتف</th>
+                            <th>الفئة</th>
+                            <th>التقييم</th>
+                            <th>المراجعات</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Empty State -->
+            <div class="empty-state d-none" id="emptyState">
+                <i class="bi bi-inbox"></i>
+                <h5 class="text-muted">لا توجد بيانات</h5>
+                <p class="text-muted">لم يتم العثور على أي سجلات مطابقة</p>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mt-4" id="paginationContainer">
+            <ul class="pagination justify-content-center" id="pagination">
+                <!-- Pagination will be loaded here -->
+            </ul>
+        </nav>
+    </div>
+
+    <!-- View Modal -->
+    <div class="modal fade" id="viewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-eye-fill me-2"></i>
+                        تفاصيل السجل
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="viewModalBody">
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalTitle">
+                        <i class="bi bi-plus-circle-fill me-2"></i>
+                        إضافة سجل جديد
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="recordForm">
+                        <input type="hidden" id="editRowIndex">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">الاسم <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="formName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">الفئة <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="formCategory" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">العنوان</label>
+                                <input type="text" class="form-control" id="formAddress">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">الهاتف</label>
+                                <input type="text" class="form-control" id="formPhone">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">الموقع الإلكتروني</label>
+                                <input type="url" class="form-control" id="formWebsite">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">التقييم</label>
+                                <input type="number" class="form-control" id="formRating" min="0" max="5" step="0.1">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">عدد المراجعات</label>
+                                <input type="number" class="form-control" id="formReviews" min="0">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">الكلمات المفتاحية</label>
+                                <textarea class="form-control" id="formKeywords" rows="2"></textarea>
+                            </div>
+                        </div>
+                        <hr>
+                        <h6 class="mb-3">المراجعات</h6>
+                        <div id="reviewsContainer">
+                            <!-- Review 1 -->
+                            <div class="review-card">
+                                <h6 class="text-primary mb-3">المراجعة الأولى</h6>
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <textarea class="form-control" id="formReview1Text" rows="2" placeholder="نص المراجعة"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control" id="formReview1Score" placeholder="التقييم" min="0" max="5">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="date" class="form-control" id="formReview1Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Review 2 -->
+                            <div class="review-card">
+                                <h6 class="text-primary mb-3">المراجعة الثانية</h6>
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <textarea class="form-control" id="formReview2Text" rows="2" placeholder="نص المراجعة"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control" id="formReview2Score" placeholder="التقييم" min="0" max="5">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="date" class="form-control" id="formReview2Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Review 3 -->
+                            <div class="review-card">
+                                <h6 class="text-primary mb-3">المراجعة الثالثة</h6>
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <textarea class="form-control" id="formReview3Text" rows="2" placeholder="نص المراجعة"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control" id="formReview3Score" placeholder="التقييم" min="0" max="5">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="date" class="form-control" id="formReview3Date">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" onclick="saveRecord()">
+                        <i class="bi bi-check-circle me-1"></i> حفظ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        تأكيد الحذف
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <i class="bi bi-trash3 text-danger" style="font-size: 4rem;"></i>
+                    <h5 class="mt-3">هل أنت متأكد من حذف هذا السجل؟</h5>
+                    <p class="text-muted">لا يمكن التراجع عن هذا الإجراء</p>
+                    <input type="hidden" id="deleteRowIndex">
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-danger px-4" onclick="confirmDelete()">
+                        <i class="bi bi-trash3 me-1"></i> حذف
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
