@@ -3,7 +3,7 @@
 // ============================================
 const CONFIG = {
     // ضع رابط Web App الخاص بك هنا بعد النشر
-    API_URL: 'https://script.google.com/macros/s/AKfycbwcW7nuwbEPxZ2S9UIEXPBofYFk8KM2EA5Y8EHT1W2FpMj7DvhPFeMf3Xzd-qukGO738Q/exec',
+    API_URL: 'https://script.google.com/macros/s/AKfycbzbLYN6pSJqGD_pnJz9icsqGHoT3PEXHlKra4CHk4xxxb-Y9Y6QHwTBRZU0Sm1Z9IAq/exec',
     ITEMS_PER_PAGE: 10
 };
 
@@ -651,3 +651,4 @@ function getScoreClass(score) {
     if (s >= 2.5) return 'score-neutral';
     return 'score-negative';
 }
+
