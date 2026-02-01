@@ -3,7 +3,7 @@
 // ============================================
 const CONFIG = {
     // ضع رابط Web App الخاص بك هنا بعد النشر
-    API_URL: 'https://script.google.com/macros/s/AKfycbzbLYN6pSJqGD_pnJz9icsqGHoT3PEXHlKra4CHk4xxxb-Y9Y6QHwTBRZU0Sm1Z9IAq/exec',
+    API_URL: 'https://script.google.com/macros/s/AKfycbwcW7nuwbEPxZ2S9UIEXPBofYFk8KM2EA5Y8EHT1W2FpMj7DvhPFeMf3Xzd-qukGO738Q/exec',
     ITEMS_PER_PAGE: 10
 };
 
@@ -143,30 +143,30 @@ function renderTable() {
             <td><span class="badge bg-light text-dark">${startIndex + index + 1}</span></td>
             <td>
                 <div class="fw-bold">${escapeHtml(item.Name || '-')}</div>
-                ${item.Website ? `<small class="text-muted"><i class="bi bi-globe me-1"></i>${truncate(item.Website, 30)}</small>` : ''}
+                ${item.Website ? `<small class="text-muted"><i class="bi bi-globe ms-1"></i>${truncate(item.Website, 30)}</small>` : ''}
             </td>
             <td>
                 <div class="d-flex align-items-center">
-                    <i class="bi bi-geo-alt text-primary me-2"></i>
+                    <i class="bi bi-geo-alt text-primary ms-2"></i>
                     <span>${truncate(escapeHtml(item.Address || '-'), 40)}</span>
                 </div>
             </td>
             <td>
                 <a href="tel:${item.Phone}" class="text-decoration-none">
-                    <i class="bi bi-telephone text-success me-1"></i>
+                    <i class="bi bi-telephone text-success ms-1"></i>
                     ${escapeHtml(item.Phone || '-')}
                 </a>
             </td>
             <td><span class="category-badge">${escapeHtml(item.Category || '-')}</span></td>
             <td>
                 <span class="rating-badge">
-                    <i class="bi bi-star-fill me-1"></i>
+                    <i class="bi bi-star-fill ms-1"></i>
                     ${item.Rating || '0'}
                 </span>
             </td>
             <td>
                 <span class="badge bg-light text-dark">
-                    <i class="bi bi-chat-dots me-1"></i>
+                    <i class="bi bi-chat-dots ms-1"></i>
                     ${formatNumber(item.Reviews || 0)}
                 </span>
             </td>
@@ -329,25 +329,25 @@ function viewRecord(rowIndex) {
         <div class="row">
             <div class="col-md-6 mb-4">
                 <h4 class="text-primary mb-3">
-                    <i class="bi bi-building me-2"></i>
+                    <i class="bi bi-building ms-2"></i>
                     ${escapeHtml(item.Name || '-')}
                 </h4>
                 <p class="mb-2">
-                    <i class="bi bi-geo-alt text-muted me-2"></i>
+                    <i class="bi bi-geo-alt text-muted ms-2"></i>
                     <strong>العنوان:</strong> ${escapeHtml(item.Address || '-')}
                 </p>
                 <p class="mb-2">
-                    <i class="bi bi-telephone text-muted me-2"></i>
+                    <i class="bi bi-telephone text-muted ms-2"></i>
                     <strong>الهاتف:</strong> 
                     <a href="tel:${item.Phone}">${escapeHtml(item.Phone || '-')}</a>
                 </p>
                 <p class="mb-2">
-                    <i class="bi bi-globe text-muted me-2"></i>
+                    <i class="bi bi-globe text-muted ms-2"></i>
                     <strong>الموقع:</strong> 
                     ${item.Website ? `<a href="${item.Website}" target="_blank">${escapeHtml(item.Website)}</a>` : '-'}
                 </p>
                 <p class="mb-2">
-                    <i class="bi bi-tag text-muted me-2"></i>
+                    <i class="bi bi-tag text-muted ms-2"></i>
                     <strong>الفئة:</strong> 
                     <span class="category-badge">${escapeHtml(item.Category || '-')}</span>
                 </p>
@@ -365,13 +365,13 @@ function viewRecord(rowIndex) {
         
         <hr>
         
-        <h5 class="mb-3"><i class="bi bi-chat-quote me-2"></i>المراجعات</h5>
+        <h5 class="mb-3"><i class="bi bi-chat-quote ms-2"></i>المراجعات</h5>
         
         ${item['Review 1 Text'] ? `
             <div class="review-card">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <span class="review-score ${getScoreClass(item['Review 1 Score'])}">
-                        <i class="bi bi-star-fill me-1"></i>${item['Review 1 Score'] || '-'}
+                        <i class="bi bi-star-fill ms-1"></i>${item['Review 1 Score'] || '-'}
                     </span>
                     <small class="text-muted">${formatDate(item['Review 1 Date'])}</small>
                 </div>
@@ -383,7 +383,7 @@ function viewRecord(rowIndex) {
             <div class="review-card">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <span class="review-score ${getScoreClass(item['Review 2 Score'])}">
-                        <i class="bi bi-star-fill me-1"></i>${item['Review 2 Score'] || '-'}
+                        <i class="bi bi-star-fill ms-1"></i>${item['Review 2 Score'] || '-'}
                     </span>
                     <small class="text-muted">${formatDate(item['Review 2 Date'])}</small>
                 </div>
@@ -395,7 +395,7 @@ function viewRecord(rowIndex) {
             <div class="review-card">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <span class="review-score ${getScoreClass(item['Review 3 Score'])}">
-                        <i class="bi bi-star-fill me-1"></i>${item['Review 3 Score'] || '-'}
+                        <i class="bi bi-star-fill ms-1"></i>${item['Review 3 Score'] || '-'}
                     </span>
                     <small class="text-muted">${formatDate(item['Review 3 Date'])}</small>
                 </div>
@@ -408,7 +408,7 @@ function viewRecord(rowIndex) {
         
         ${item['keywords Research'] ? `
             <hr>
-            <h5 class="mb-3"><i class="bi bi-key me-2"></i>الكلمات المفتاحية</h5>
+            <h5 class="mb-3"><i class="bi bi-key ms-2"></i>الكلمات المفتاحية</h5>
             <p class="bg-light rounded p-3">${escapeHtml(item['keywords Research'])}</p>
         ` : ''}
     `;
@@ -424,7 +424,7 @@ function editRecord(rowIndex) {
     const item = allData.find(r => r.rowIndex === rowIndex);
     if (!item) return;
     
-    document.getElementById('addModalTitle').innerHTML = '<i class="bi bi-pencil-fill me-2"></i>تعديل السجل';
+    document.getElementById('addModalTitle').innerHTML = '<i class="bi bi-pencil-fill ms-2"></i>تعديل السجل';
     document.getElementById('editRowIndex').value = rowIndex;
     
     // ملء الحقول
@@ -505,7 +505,7 @@ async function saveRecord() {
 function resetForm() {
     document.getElementById('recordForm').reset();
     document.getElementById('editRowIndex').value = '';
-    document.getElementById('addModalTitle').innerHTML = '<i class="bi bi-plus-circle-fill me-2"></i>إضافة سجل جديد';
+    document.getElementById('addModalTitle').innerHTML = '<i class="bi bi-plus-circle-fill ms-2"></i>إضافة سجل جديد';
 }
 
 // Reset form when modal closes
@@ -577,9 +577,9 @@ function showToast(message, type = 'info') {
     const html = `
         <div id="${id}" class="toast show" role="alert">
             <div class="toast-header bg-${type} text-white">
-                <i class="bi bi-${icons[type]} me-2"></i>
+                <i class="bi bi-${icons[type]} ms-2"></i>
                 <strong class="me-auto">إشعار</strong>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                <button type="button" class="btn-close btn-close-white order-first" data-bs-dismiss="toast"></button>
             </div>
             <div class="toast-body">
                 ${message}
@@ -651,4 +651,3 @@ function getScoreClass(score) {
     if (s >= 2.5) return 'score-neutral';
     return 'score-negative';
 }
-

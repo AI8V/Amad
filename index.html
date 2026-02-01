@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>نظام إدارة البيانات</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo&amp;display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;display=swap">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
@@ -25,7 +27,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <i class="bi bi-database-fill me-2"></i>
+                <i class="bi bi-database-fill ms-1"></i>
                 نظام إدارة البيانات
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -35,23 +37,23 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link active" href="#" onclick="loadData()">
-                            <i class="bi bi-house-fill me-1"></i> الرئيسية
+                            <i class="bi bi-house-fill  ms-1"></i> الرئيسية
                         </a>
                     </li>
 <li class="nav-item">
                         <a class="nav-link active" href="analytics.html">
-                            <i class="bi bi-graph-up me-1"></i> التحليلات
+                            <i class="bi bi-graph-up  ms-1"></i> التحليلات
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addModal">
-                            <i class="bi bi-plus-circle-fill me-1"></i> إضافة جديد
+                            <i class="bi bi-plus-circle-fill  ms-1"></i> إضافة جديد
                         </a>
                     </li>
                 </ul>
                 <button class="btn btn-light btn-sm" onclick="refreshData()">
-                    <i class="bi bi-arrow-clockwise me-1"></i> تحديث
+                    <i class="bi bi-arrow-clockwise  ms-1"></i> تحديث
                 </button>
             </div>
         </div>
@@ -120,14 +122,14 @@
             <div class="row g-3 align-items-end">
                 <div class="col-lg-5 col-md-6">
                     <label class="form-label fw-bold">
-                        <i class="bi bi-search me-1"></i> البحث
+                        <i class="bi bi-search  ms-1"></i> البحث
                     </label>
                     <input type="text" class="form-control search-input" id="searchInput" 
                            placeholder="ابحث عن اسم، عنوان، هاتف..." onkeyup="handleSearch()">
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <label class="form-label fw-bold">
-                        <i class="bi bi-funnel me-1"></i> الفئة
+                        <i class="bi bi-funnel  ms-1"></i> الفئة
                     </label>
                     <select class="form-select search-input" id="categoryFilter" onchange="handleCategoryFilter()">
                         <option value="">جميع الفئات</option>
@@ -135,7 +137,7 @@
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <label class="form-label fw-bold">
-                        <i class="bi bi-sort-down me-1"></i> الترتيب
+                        <i class="bi bi-sort-down  ms-1"></i> الترتيب
                     </label>
                     <select class="form-select search-input" id="sortBy" onchange="handleSort()">
                         <option value="name">الاسم</option>
@@ -145,7 +147,7 @@
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <button class="btn btn-primary w-100" style="border-radius: 12px; padding: 0.75rem;" onclick="resetFilters()">
-                        <i class="bi bi-x-circle me-1"></i> إعادة تعيين
+                        <i class="bi bi-x-circle  ms-1"></i> إعادة تعيين
                     </button>
                 </div>
             </div>
@@ -195,10 +197,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="bi bi-eye-fill me-2"></i>
+                        <i class="bi bi-eye-fill ms-1"></i>
                         تفاصيل السجل
                     </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close order-first" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body" id="viewModalBody">
                     <!-- Content will be loaded here -->
@@ -213,10 +215,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addModalTitle">
-                        <i class="bi bi-plus-circle-fill me-2"></i>
+                        <i class="bi bi-plus-circle-fill ms-1"></i>
                         إضافة سجل جديد
                     </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close order-first" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="recordForm">
@@ -309,7 +311,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
                     <button type="button" class="btn btn-primary" onclick="saveRecord()">
-                        <i class="bi bi-check-circle me-1"></i> حفظ
+                        <i class="bi bi-check-circle  ms-1"></i> حفظ
                     </button>
                 </div>
             </div>
@@ -322,10 +324,10 @@
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title">
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <i class="bi bi-exclamation-triangle-fill ms-1"></i>
                         تأكيد الحذف
                     </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close btn-close-white  order-first" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center py-4">
                     <i class="bi bi-trash3 text-danger" style="font-size: 4rem;"></i>
@@ -336,7 +338,7 @@
                 <div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">إلغاء</button>
                     <button type="button" class="btn btn-danger px-4" onclick="confirmDelete()">
-                        <i class="bi bi-trash3 me-1"></i> حذف
+                        <i class="bi bi-trash3  ms-1"></i> حذف
                     </button>
                 </div>
             </div>

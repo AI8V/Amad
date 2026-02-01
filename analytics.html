@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>تحليل الفئات حسب المدن</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo&amp;display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;display=swap">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -22,7 +24,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <i class="bi bi-database-fill me-2"></i>
+                <i class="bi bi-database-fill ms-2"></i>
                 نظام إدارة البيانات
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -32,21 +34,22 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">
-                            <i class="bi bi-house-fill me-1"></i> الرئيسية
+                            <i class="bi bi-house-fill ms-1"></i> الرئيسية
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="analytics.html">
-                            <i class="bi bi-graph-up me-1"></i> التحليلات
+                            <i class="bi bi-graph-up ms-1"></i> التحليلات
                         </a>
                     </li>
+
                 </ul>
                 <div class="d-flex gap-2">
                     <button class="btn btn-outline-light btn-sm export-btn" onclick="exportToCSV()">
-                        <i class="bi bi-download me-1"></i> تصدير CSV
+                        <i class="bi bi-download ms-1"></i> تصدير CSV
                     </button>
                     <button class="btn btn-light btn-sm export-btn" onclick="refreshData()">
-                        <i class="bi bi-arrow-clockwise me-1"></i> تحديث
+                        <i class="bi bi-arrow-clockwise ms-1"></i> تحديث
                     </button>
                 </div>
             </div>
@@ -115,18 +118,18 @@
         <!-- Keyword Filter -->
         <div class="filter-card">
             <h5 class="mb-3">
-                <i class="bi bi-funnel-fill text-primary me-2"></i>
+                <i class="bi bi-funnel-fill text-primary ms-2"></i>
                 اختر الكلمة المفتاحية
             </h5>
             <div id="keywordButtons">
                 <button class="btn keyword-btn active" data-keyword="all" onclick="selectKeyword('all', this)">
-                    <i class="bi bi-grid-fill me-1"></i> جميع الكلمات
+                    <i class="bi bi-grid-fill ms-1"></i> جميع الكلمات
                 </button>
                 <!-- Keywords will be loaded here -->
             </div>
             <hr class="my-3">
             <div class="d-flex align-items-center flex-wrap">
-                <span class="text-muted me-2">المدن المكتشفة:</span>
+                <span class="text-muted ms-2">المدن المكتشفة:</span>
                 <div id="cityBadges">
                     <!-- City badges will be loaded here -->
                 </div>
@@ -139,7 +142,7 @@
                 <div class="analytics-table-container">
                     <div class="p-3 border-bottom">
                         <h5 class="mb-0">
-                            <i class="bi bi-table text-primary me-2"></i>
+                            <i class="bi bi-table text-primary ms-2"></i>
                             تحليل توزيع الفئات حسب المدن
                         </h5>
                     </div>
@@ -161,7 +164,7 @@
                 <!-- Insights -->
                 <div class="chart-container">
                     <h6 class="mb-3">
-                        <i class="bi bi-lightbulb-fill text-warning me-2"></i>
+                        <i class="bi bi-lightbulb-fill text-warning ms-2"></i>
                         استنتاجات سريعة
                     </h6>
                     <div id="insightsContainer">
@@ -172,7 +175,7 @@
                 <!-- Chart -->
                 <div class="chart-container">
                     <h6 class="mb-3">
-                        <i class="bi bi-pie-chart-fill text-primary me-2"></i>
+                        <i class="bi bi-pie-chart-fill text-primary ms-2"></i>
                         توزيع الفئات
                     </h6>
                     <canvas id="categoryChart"></canvas>
@@ -181,7 +184,7 @@
                 <!-- City Comparison Chart -->
                 <div class="chart-container">
                     <h6 class="mb-3">
-                        <i class="bi bi-bar-chart-fill text-success me-2"></i>
+                        <i class="bi bi-bar-chart-fill text-success ms-2"></i>
                         مقارنة المدن
                     </h6>
                     <canvas id="cityChart"></canvas>
@@ -193,7 +196,7 @@
         // إعدادات
         // ============================================
         const CONFIG = {
-            API_URL: 'https://script.google.com/macros/s/AKfycbzbLYN6pSJqGD_pnJz9icsqGHoT3PEXHlKra4CHk4xxxb-Y9Y6QHwTBRZU0Sm1Z9IAq/exec'
+            API_URL: 'https://script.google.com/macros/s/AKfycbwcW7nuwbEPxZ2S9UIEXPBofYFk8KM2EA5Y8EHT1W2FpMj7DvhPFeMf3Xzd-qukGO738Q/exec'
         };
 
         // ============================================
@@ -288,7 +291,7 @@
             let html = `
                 <button class="btn keyword-btn ${currentKeyword === 'all' ? 'active' : ''}" 
                         data-keyword="all" onclick="selectKeyword('all', this)">
-                    <i class="bi bi-grid-fill me-1"></i> جميع الكلمات
+                    <i class="bi bi-grid-fill ms-1"></i> جميع الكلمات
                 </button>
             `;
             
@@ -308,7 +311,7 @@
         function renderCityBadges(cities) {
             const container = document.getElementById('cityBadges');
             container.innerHTML = cities.map(city => 
-                `<span class="badge-city"><i class="bi bi-geo-alt me-1"></i>${escapeHtml(city)}</span>`
+                `<span class="badge-city"><i class="bi bi-geo-alt ms-1"></i>${escapeHtml(city)}</span>`
             ).join('');
         }
 
@@ -376,7 +379,7 @@
                     const kwRows = Object.values(grouped).filter(g => g.keyword === item.keyword).length;
                     bodyHtml += `
                         <td class="keyword-cell" rowspan="${kwRows}">
-                            <i class="bi bi-key me-1"></i>
+                            <i class="bi bi-key ms-1"></i>
                             ${escapeHtml(item.keyword)}
                         </td>
                     `;
@@ -402,7 +405,7 @@
             // صف الإجمالي لكل كلمة مفتاحية
             Object.keys(keywordTotals).forEach(kw => {
                 bodyHtml += `<tr class="total-row">`;
-                bodyHtml += `<td colspan="2"><i class="bi bi-calculator me-1"></i>إجمالي "${escapeHtml(kw)}"</td>`;
+                bodyHtml += `<td colspan="2"><i class="bi bi-calculator ms-1"></i>إجمالي "${escapeHtml(kw)}"</td>`;
                 
                 cities.forEach(city => {
                     const total = keywordTotals[kw][city] || 0;
@@ -465,7 +468,7 @@
             
             container.innerHTML = insights.map(insight => `
                 <div class="insight-card ${insight.type}">
-                    <i class="bi bi-${insight.icon} me-2"></i>
+                    <i class="bi bi-${insight.icon} ms-2"></i>
                     ${insight.text}
                 </div>
             `).join('');
@@ -609,10 +612,9 @@
             if (percentage >= 10) return 'percentage-medium';
             return 'percentage-low';
         }
-
     </script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
 </body>
 
 </html>
