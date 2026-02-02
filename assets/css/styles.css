@@ -1,5 +1,5 @@
 /* ============================================
-   Dark Theme Variables
+   CSS Variables - Dark Theme
    ============================================ */
 
 :root {
@@ -9,10 +9,11 @@
   --secondary-color: #1e40af;
   --accent-color: #60a5fa;
   --success-color: #34d399;
-  --success-light: #064e3b;
+  --success-light: #065f46;
   --success-bright: #6ee7b7;
   --warning-color: #fbbf24;
   --warning-light: #78350f;
+  --warning-bright: #fcd34d;
   --danger-color: #f87171;
   --danger-light: #7f1d1d;
   --info-color: #22d3ee;
@@ -24,7 +25,6 @@
   --bg-input: #1e293b;
   --bg-table-header: linear-gradient(135deg, #1e40af, #1e3a8a);
   --bg-table-row-hover: #273549;
-  --bg-light-box: #1e293b;
   --text-primary: #f1f5f9;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
@@ -47,7 +47,7 @@ body {
 }
 
 /* ============================================
-   Accessibility Improvements
+   Accessibility
    ============================================ */
 
 .visually-hidden {
@@ -62,6 +62,25 @@ body {
   border: 0 !important;
 }
 
+.skip-link {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 10px 20px;
+  z-index: 10000;
+  text-decoration: none;
+  border-radius: 0 0 8px 0;
+  font-weight: 600;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  color: #fff;
+}
+
 :focus-visible {
   outline: 3px solid var(--accent-color);
   outline-offset: 2px;
@@ -73,22 +92,6 @@ body {
   box-shadow: none;
 }
 
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: var(--primary-color);
-  color: white;
-  padding: 8px 16px;
-  z-index: 10000;
-  text-decoration: none;
-  border-radius: 0 0 8px 0;
-}
-
-.skip-link:focus {
-  top: 0;
-}
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -97,15 +100,8 @@ body {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .spinner-custom {
-    animation: none;
-    border: 4px solid var(--primary-color);
-  }
-}
-
 /* ============================================
-   Navbar Styles
+   Navbar
    ============================================ */
 
 .navbar {
@@ -116,6 +112,7 @@ body {
 .navbar-brand {
   font-weight: 700;
   font-size: 1.5rem;
+  color: #fff !important;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -127,7 +124,41 @@ body {
 }
 
 /* ============================================
-   Statistics Cards
+   Loading
+   ============================================ */
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-text {
+  color: var(--text-secondary);
+  margin-top: 1rem;
+}
+
+.spinner-custom {
+  width: 60px;
+  height: 60px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   Stat Cards
    ============================================ */
 
 .stat-card {
@@ -135,10 +166,10 @@ body {
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: var(--shadow-md);
-  transition: all 0.3s ease;
   border: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .stat-card::before {
@@ -156,7 +187,6 @@ body {
   transform: translateY(-5px);
   box-shadow: var(--shadow-lg);
   border-color: var(--primary-color);
-  background: var(--bg-card-hover);
 }
 
 .stat-icon {
@@ -167,7 +197,8 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  color: white;
+  color: #fff;
+  flex-shrink: 0;
 }
 
 .stat-icon.blue {
@@ -198,7 +229,7 @@ body {
 }
 
 .stat-label {
-  color: var(--text-muted) !important;
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin-bottom: 0;
 }
@@ -216,48 +247,49 @@ body {
   border: 1px solid var(--border-color);
 }
 
-.search-input, .form-control, .form-select {
+.form-control, .form-select {
   border-radius: 12px;
   border: 2px solid var(--border-color);
   padding: 0.75rem 1rem;
-  transition: all 0.3s ease;
   background-color: var(--bg-input);
   color: var(--text-primary);
+  transition: all 0.3s ease;
 }
 
 .form-control::placeholder {
   color: var(--text-muted);
 }
 
-.search-input:focus, .form-control:focus, .form-select:focus {
+.form-control:focus, .form-select:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
   background-color: var(--bg-input);
   color: var(--text-primary);
 }
 
-/* ============================================
-   Dropdown Arrow Fix for RTL
-   ============================================ */
+/* RTL Dropdown Fix */
 
 .form-select {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-size: 16px 12px;
+  background-position: left 0.75rem center;
   padding-left: 2.5rem;
   padding-right: 1rem;
-  background-position: left 0.75rem center;
 }
 
-[dir="rtl"] .form-select, html[dir="rtl"] .form-select {
-  background-position: left 0.75rem center;
-  padding-left: 2.5rem;
-  padding-right: 1rem;
+.form-select option {
+  background-color: var(--bg-input);
+  color: var(--text-primary);
 }
 
 /* ============================================
-   Data Table
+   Table
    ============================================ */
+
+.table-section {
+  margin-top: 2rem;
+}
 
 .table-container {
   background: var(--bg-card);
@@ -267,10 +299,6 @@ body {
   border: 1px solid var(--border-color);
 }
 
-.table-section {
-  margin-top: 2rem;
-}
-
 .table {
   margin-bottom: 0;
   color: var(--text-primary);
@@ -278,11 +306,10 @@ body {
 
 .table thead {
   background: var(--bg-table-header);
-  color: white;
 }
 
 .table thead th {
-  color: #ffffff;
+  color: #fff;
   padding: 1rem;
   font-weight: 600;
   border: none;
@@ -290,8 +317,8 @@ body {
 }
 
 .table tbody tr {
-  transition: all 0.2s ease;
   border-color: var(--border-color);
+  transition: background-color 0.2s ease;
 }
 
 .table tbody tr:hover {
@@ -351,8 +378,8 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
   border: none;
+  transition: all 0.2s ease;
 }
 
 .btn-view {
@@ -362,7 +389,7 @@ body {
 
 .btn-view:hover {
   background: var(--primary-color);
-  color: white;
+  color: #fff;
   transform: scale(1.1);
 }
 
@@ -373,7 +400,7 @@ body {
 
 .btn-edit:hover {
   background: #10b981;
-  color: white;
+  color: #fff;
   transform: scale(1.1);
 }
 
@@ -384,7 +411,7 @@ body {
 
 .btn-delete:hover {
   background: #ef4444;
-  color: white;
+  color: #fff;
   transform: scale(1.1);
 }
 
@@ -412,7 +439,6 @@ body {
 
 .btn-secondary:hover {
   background: var(--border-color);
-  border-color: var(--border-light);
   color: var(--text-primary);
 }
 
@@ -424,28 +450,28 @@ body {
 .btn-light {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
+  color: #fff;
 }
 
 .btn-light:hover {
   background: rgba(255, 255, 255, 0.2);
-  color: white;
+  color: #fff;
 }
 
 /* ============================================
-   Modal Styles
+   Modals
    ============================================ */
 
 .modal-content {
   border-radius: 20px;
   border: 1px solid var(--border-color);
-  overflow: hidden;
   background: var(--bg-card);
+  overflow: hidden;
 }
 
 .modal-header {
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  color: white;
+  color: #fff;
   border: none;
   padding: 1.5rem;
 }
@@ -465,53 +491,74 @@ body {
   border-top: 1px solid var(--border-color);
 }
 
+/* Modal Content Fixes */
+
+.modal-title-name {
+  color: var(--primary-light);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.modal-link {
+  color: var(--primary-light) !important;
+}
+
+.modal-link:hover {
+  color: #bfdbfe !important;
+}
+
+.modal-divider {
+  border-color: var(--border-color);
+  opacity: 0.5;
+}
+
+.section-title {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.rating-box {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid var(--border-color);
+}
+
+.rating-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-bottom: 0.25rem;
+}
+
+.rating-count {
+  color: #d1d5db;
+  margin-bottom: 0;
+}
+
+.no-reviews {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 2rem;
+}
+
+.keywords-box {
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  padding: 1rem;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.delete-warning {
+  color: var(--text-muted);
+}
+
 /* ============================================
-   Modal Content - High Contrast Fix
-   ============================================ */
-
-/* Fix: h3.text-primary in modal - use lighter blue */
-
-.modal-body h3.text-primary, .modal-body .text-primary, .modal-body h3[class*="text-primary"] {
-  color: #93c5fd !important;
-}
-
-/* Fix: Rating number in modal */
-
-.modal-body .h2.text-primary, .modal-body p.h2.text-primary, .modal-body .h2[class*="text-primary"] {
-  color: #93c5fd !important;
-}
-
-/* Fix: bg-light box in modal */
-
-.modal-body .bg-light, .modal-body div.bg-light {
-  background-color: var(--bg-tertiary) !important;
-}
-
-/* Fix: text-muted inside bg-light in modal */
-
-.modal-body .bg-light .text-muted, .modal-body .bg-light p.text-muted, .modal-body div.bg-light .text-muted {
-  color: #d1d5db !important;
-}
-
-/* Fix: Review score positive - needs dark text on light bg */
-
-.review-score.score-positive {
-  background: #065f46;
-  color: #6ee7b7 !important;
-}
-
-.review-score.score-neutral {
-  background: #78350f;
-  color: #fcd34d !important;
-}
-
-.review-score.score-negative {
-  background: #7f1d1d;
-  color: #fca5a5 !important;
-}
-
-/* ============================================
-   Form Labels
+   Form Elements
    ============================================ */
 
 .form-label {
@@ -519,48 +566,26 @@ body {
   font-weight: 500;
 }
 
-label.form-label.fw-bold {
-  color: var(--text-primary);
-}
-
-/* ============================================
-   Loading Spinner
-   ============================================ */
-
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(15, 23, 42, 0.95);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.loading-overlay p {
+.form-text {
   color: var(--text-secondary) !important;
 }
 
-.spinner-custom {
-  width: 60px;
-  height: 60px;
-  border: 4px solid var(--border-color);
-  border-top-color: var(--primary-color);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+legend {
+  color: var(--text-primary);
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1rem;
 }
 
 /* ============================================
-   Review Card
+   Review Cards
    ============================================ */
 
 .review-card {
@@ -569,11 +594,33 @@ label.form-label.fw-bold {
   padding: 1rem;
   margin-bottom: 1rem;
   border-right: 4px solid var(--primary-color);
-  border-left: none;
 }
 
-.review-card time.text-muted, .review-card .text-muted {
-  color: var(--text-secondary) !important;
+.review-card-title {
+  color: var(--primary-light);
+}
+
+.review-score {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.score-positive {
+  background: var(--success-light);
+  color: var(--success-bright) !important;
+}
+
+.score-neutral {
+  background: var(--warning-light);
+  color: var(--warning-bright) !important;
+}
+
+.score-negative {
+  background: var(--danger-light);
+  color: #fca5a5 !important;
 }
 
 /* ============================================
@@ -589,6 +636,7 @@ label.form-label.fw-bold {
   font-size: 4rem;
   color: var(--text-muted);
   margin-bottom: 1rem;
+  display: block;
 }
 
 .empty-state h3 {
@@ -650,7 +698,7 @@ label.form-label.fw-bold {
 }
 
 /* ============================================
-   Links & Text Colors
+   Links
    ============================================ */
 
 a {
@@ -661,7 +709,35 @@ a:hover {
   color: var(--accent-color);
 }
 
-/* Text utilities - WCAG AA Compliant */
+.website-link {
+  color: var(--primary-light);
+  font-size: 0.85rem;
+}
+
+.website-link a {
+  color: var(--primary-light) !important;
+  text-decoration: none;
+}
+
+.website-link a:hover {
+  color: #bfdbfe !important;
+  text-decoration: underline;
+}
+
+.phone-link {
+  color: var(--success-bright) !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.phone-link:hover {
+  color: #a7f3d0 !important;
+}
+
+/* ============================================
+   Text Utilities
+   ============================================ */
 
 .text-muted {
   color: var(--text-muted) !important;
@@ -680,93 +756,7 @@ a:hover {
 }
 
 /* ============================================
-   Table Specific Styles
-   ============================================ */
-
-/* Website links in table */
-
-.website-link {
-  color: var(--primary-light);
-  font-size: 0.85rem;
-}
-
-.website-link a {
-  color: var(--primary-light) !important;
-  text-decoration: none;
-}
-
-.website-link a:hover {
-  color: #bfdbfe !important;
-  text-decoration: underline;
-}
-
-.website-link .bi {
-  color: var(--primary-light);
-}
-
-/* Phone links */
-
-.phone-link {
-  color: var(--success-bright) !important;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-}
-
-.phone-link:hover {
-  color: #a7f3d0 !important;
-}
-
-.phone-link .bi {
-  color: var(--success-bright);
-}
-
-/* Table links */
-
-.table a, .table-container a {
-  color: var(--success-bright);
-}
-
-.table a:hover, .table-container a:hover {
-  color: #a7f3d0;
-}
-
-.table small.text-muted, .table-container small.text-muted {
-  color: var(--text-secondary) !important;
-}
-
-.table small a, .table-container small a {
-  color: var(--primary-light) !important;
-}
-
-.table small a:hover, .table-container small a:hover {
-  color: #bfdbfe !important;
-}
-
-/* Table icons */
-
-.table .bi.text-primary {
-  color: var(--accent-color) !important;
-}
-
-.table .bi.text-success {
-  color: var(--success-bright) !important;
-}
-
-.table .bi.text-muted {
-  color: var(--text-muted) !important;
-}
-
-/* ============================================
-   Rating Stars
-   ============================================ */
-
-.rating-stars {
-  color: #fbbf24;
-}
-
-/* ============================================
-   Definition List in Modal
+   Definition Lists
    ============================================ */
 
 dl dt {
@@ -781,46 +771,15 @@ dl dd {
 }
 
 /* ============================================
-   Backgrounds
+   Rating Stars
    ============================================ */
 
-.bg-light {
-  background-color: var(--bg-tertiary) !important;
+.rating-stars {
+  color: #fbbf24;
 }
 
 /* ============================================
-   Form Elements
-   ============================================ */
-
-.form-text, .form-text.text-muted {
-  color: var(--text-secondary) !important;
-}
-
-.form-control::placeholder, .form-select::placeholder {
-  color: var(--text-muted);
-  opacity: 1;
-}
-
-/* ============================================
-   Fieldset & Legend
-   ============================================ */
-
-fieldset {
-  border: none;
-  padding: 0;
-  margin: 0;
-}
-
-legend {
-  color: var(--text-primary);
-  font-weight: 600;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
-  margin-bottom: 1rem;
-}
-
-/* ============================================
-   Scrollbar Styling
+   Scrollbar
    ============================================ */
 
 ::-webkit-scrollbar {
@@ -847,15 +806,6 @@ legend {
 }
 
 /* ============================================
-   Select Options
-   ============================================ */
-
-.form-select option {
-  background-color: var(--bg-input);
-  color: var(--text-primary);
-}
-
-/* ============================================
    Responsive
    ============================================ */
 
@@ -866,25 +816,19 @@ legend {
 }
 
 @media (max-width: 768px) {
+  .stat-card, .search-section {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
   .table-responsive {
     font-size: 0.85rem;
   }
 }
 
-@media (max-width: 768px) {
-  .stat-card {
-    padding: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .search-section {
-    padding: 1rem;
-  }
-}
-
 /* ============================================
-   High Contrast Mode
+   High Contrast
    ============================================ */
 
 @media (prefers-contrast: high) {
@@ -897,72 +841,5 @@ legend {
   .btn-action {
     border: 2px solid currentColor;
   }
-}
-
-/* ============================================
-   Modal Custom Elements - High Contrast
-   ============================================ */
-
-.modal-title-name {
-  color: #93c5fd;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.modal-link {
-  color: #93c5fd !important;
-}
-
-.modal-link:hover {
-  color: #bfdbfe !important;
-}
-
-.modal-divider {
-  border-color: var(--border-color);
-  opacity: 0.5;
-}
-
-.section-title {
-  color: var(--text-primary);
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-/* Rating box in modal */
-
-.rating-box {
-  background: var(--bg-tertiary);
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
-  border: 1px solid var(--border-color);
-}
-
-.rating-value {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #fbbf24;
-  margin-bottom: 0.25rem;
-}
-
-.rating-count {
-  color: #d1d5db;
-  margin-bottom: 0;
-  font-size: 0.95rem;
-}
-
-.no-reviews {
-  color: var(--text-muted);
-  text-align: center;
-  padding: 2rem;
-}
-
-.keywords-box {
-  background: var(--bg-tertiary);
-  border-radius: 8px;
-  padding: 1rem;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
 }
 
