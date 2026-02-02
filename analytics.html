@@ -1,619 +1,226 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="ar" dir="rtl">
+<html data-bs-theme="dark" lang="ar" data-bss-forced-theme="dark" dir="rtl">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>تحليل الفئات حسب المدن</title>
+    <title>التحليلات - نظام إدارة البيانات</title>
+    <meta name="description" content="تحليل توزيع الفئات حسب المدن - نظام إدارة البيانات">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/analytics.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;display=swap">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://fonts.gstatic.com">
 </head>
 
-<body>  <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
+<body><!-- Skip Link -->
+    <a href="#mainContent" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite" aria-label="جاري تحميل التحليلات">
         <div class="text-center">
-            <div class="spinner-custom"></div>
-            <p class="mt-3 text-muted">جاري تحميل التحليلات...</p>
+            <div class="spinner-custom" aria-hidden="true"></div>
+            <p class="loading-text">جاري تحميل التحليلات...</p>
         </div>
     </div>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <i class="bi bi-database-fill ms-2"></i>
-                نظام إدارة البيانات
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">
-                            <i class="bi bi-house-fill ms-1"></i> الرئيسية
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="analytics.html">
-                            <i class="bi bi-graph-up ms-1"></i> التحليلات
-                        </a>
-                    </li>
-
-                </ul>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-outline-light btn-sm export-btn" onclick="exportToCSV()">
-                        <i class="bi bi-download ms-1"></i> تصدير CSV
-                    </button>
-                    <button class="btn btn-light btn-sm export-btn" onclick="refreshData()">
-                        <i class="bi bi-arrow-clockwise ms-1"></i> تحديث
-                    </button>
+    <!-- Header with Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top" aria-label="التنقل الرئيسي">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="bi bi-database-fill ms-2" aria-hidden="true"></i>
+                    نظام إدارة البيانات
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="تبديل القائمة">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">
+                                <i class="bi bi-house-fill ms-1" aria-hidden="true"></i>
+                                الرئيسية
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="analytics.html" aria-current="page">
+                                <i class="bi bi-graph-up ms-1" aria-hidden="true"></i>
+                                التحليلات
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="d-flex gap-2" role="group" aria-label="إجراءات سريعة">
+                        <button class="btn btn-outline-light btn-sm" type="button" onclick="exportToCSV()">
+                            <i class="bi bi-download ms-1" aria-hidden="true"></i>
+                            تصدير CSV
+                        </button>
+                        <button class="btn btn-light btn-sm" type="button" onclick="refreshData()">
+                            <i class="bi bi-arrow-clockwise ms-1" aria-hidden="true"></i>
+                            تحديث
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <!-- Main Content -->
-    <div class="container py-4">
+    <main class="container py-4" id="mainContent">
         
-        <!-- Summary Cards -->
-        <div class="row g-3 mb-4" id="summaryCards">
-            <div class="col-lg-3 col-md-6">
-                <div class="summary-card">
-                    <div class="d-flex align-items-center">
-                        <div class="summary-icon blue">
-                            <i class="bi bi-file-earmark-text"></i>
+        <!-- Page Title -->
+        <h1 class="visually-hidden">تحليل توزيع الفئات حسب المدن</h1>
+        
+        <!-- Summary Statistics Section -->
+        <section aria-labelledby="summaryHeading" class="mb-4">
+            <h2 id="summaryHeading" class="visually-hidden">ملخص الإحصائيات</h2>
+            <div class="row g-3" id="summaryCards">
+                <div class="col-lg-3 col-md-6">
+                    <article class="summary-card">
+                        <div class="d-flex align-items-center">
+                            <div class="summary-icon blue" aria-hidden="true">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </div>
+                            <div class="me-3">
+                                <p class="summary-value" id="totalRecords" aria-live="polite">0</p>
+                                <p class="summary-label">إجمالي السجلات</p>
+                            </div>
                         </div>
-                        <div class="me-3">
-                            <div class="summary-value" id="totalRecords">0</div>
-                            <div class="summary-label">إجمالي السجلات</div>
+                    </article>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <article class="summary-card">
+                        <div class="d-flex align-items-center">
+                            <div class="summary-icon green" aria-hidden="true">
+                                <i class="bi bi-geo-alt"></i>
+                            </div>
+                            <div class="me-3">
+                                <p class="summary-value" id="totalCities" aria-live="polite">0</p>
+                                <p class="summary-label">المدن المكتشفة</p>
+                            </div>
                         </div>
-                    </div>
+                    </article>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <article class="summary-card">
+                        <div class="d-flex align-items-center">
+                            <div class="summary-icon orange" aria-hidden="true">
+                                <i class="bi bi-tags"></i>
+                            </div>
+                            <div class="me-3">
+                                <p class="summary-value" id="totalCategories" aria-live="polite">0</p>
+                                <p class="summary-label">الفئات المولدة</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <article class="summary-card">
+                        <div class="d-flex align-items-center">
+                            <div class="summary-icon purple" aria-hidden="true">
+                                <i class="bi bi-key"></i>
+                            </div>
+                            <div class="me-3">
+                                <p class="summary-value" id="totalKeywords" aria-live="polite">0</p>
+                                <p class="summary-label">الكلمات المفتاحية</p>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="summary-card">
-                    <div class="d-flex align-items-center">
-                        <div class="summary-icon green">
-                            <i class="bi bi-geo-alt"></i>
-                        </div>
-                        <div class="me-3">
-                            <div class="summary-value" id="totalCities">0</div>
-                            <div class="summary-label">المدن المكتشفة</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="summary-card">
-                    <div class="d-flex align-items-center">
-                        <div class="summary-icon orange">
-                            <i class="bi bi-tags"></i>
-                        </div>
-                        <div class="me-3">
-                            <div class="summary-value" id="totalCategories">0</div>
-                            <div class="summary-label">الفئات المولدة</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="summary-card">
-                    <div class="d-flex align-items-center">
-                        <div class="summary-icon purple">
-                            <i class="bi bi-key"></i>
-                        </div>
-                        <div class="me-3">
-                            <div class="summary-value" id="totalKeywords">0</div>
-                            <div class="summary-label">الكلمات المفتاحية</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
 
-        <!-- Keyword Filter -->
-        <div class="filter-card">
-            <h5 class="mb-3">
-                <i class="bi bi-funnel-fill text-primary ms-2"></i>
+        <!-- Keyword Filter Section -->
+        <section aria-labelledby="filterHeading" class="filter-card">
+            <h2 id="filterHeading" class="filter-title">
+                <i class="bi bi-funnel-fill ms-2" aria-hidden="true"></i>
                 اختر الكلمة المفتاحية
-            </h5>
-            <div id="keywordButtons">
-                <button class="btn keyword-btn active" data-keyword="all" onclick="selectKeyword('all', this)">
-                    <i class="bi bi-grid-fill ms-1"></i> جميع الكلمات
+            </h2>
+            <div id="keywordButtons" role="group" aria-label="فلترة حسب الكلمة المفتاحية">
+                <button class="btn keyword-btn active" data-keyword="all" 
+                        onclick="selectKeyword('all', this)" aria-pressed="true">
+                    <i class="bi bi-grid-fill ms-1" aria-hidden="true"></i>
+                    جميع الكلمات
                 </button>
-                <!-- Keywords will be loaded here -->
+                <!-- Keywords will be loaded dynamically -->
             </div>
-            <hr class="my-3">
-            <div class="d-flex align-items-center flex-wrap">
-                <span class="text-muted ms-2">المدن المكتشفة:</span>
-                <div id="cityBadges">
-                    <!-- City badges will be loaded here -->
+            <hr class="filter-divider">
+            <div class="cities-display">
+                <span class="cities-label">المدن المكتشفة:</span>
+                <div id="cityBadges" role="list" aria-label="قائمة المدن">
+                    <!-- City badges will be loaded dynamically -->
                 </div>
             </div>
-        </div>
+        </section>
 
+        <!-- Main Content Grid -->
         <div class="row">
-            <!-- Analytics Table -->
+            <!-- Analytics Table Section -->
             <div class="col-lg-8">
-                <div class="analytics-table-container">
-                    <div class="p-3 border-bottom">
-                        <h5 class="mb-0">
-                            <i class="bi bi-table text-primary ms-2"></i>
+                <section aria-labelledby="tableHeading" class="analytics-table-container">
+                    <header class="table-header">
+                        <h2 id="tableHeading" class="table-title">
+                            <i class="bi bi-table ms-2" aria-hidden="true"></i>
                             تحليل توزيع الفئات حسب المدن
-                        </h5>
-                    </div>
+                        </h2>
+                    </header>
                     <div class="table-responsive">
-                        <table class="table analytics-table" id="analyticsTable">
+                        <table class="table analytics-table" id="analyticsTable" aria-describedby="tableHeading">
                             <thead id="tableHeader">
                                 <!-- Header will be generated dynamically -->
                             </thead>
                             <tbody id="tableBody">
-                                <!-- Data will be loaded here -->
+                                <!-- Data will be loaded dynamically -->
                             </tbody>
                         </table>
                     </div>
-                </div>
+                    <!-- Empty State -->
+                    <div class="empty-state d-none" id="emptyState" role="status">
+                        <i class="bi bi-inbox" aria-hidden="true"></i>
+                        <h3>لا توجد بيانات</h3>
+                        <p>لم يتم العثور على أي سجلات للتحليل</p>
+                    </div>
+                </section>
             </div>
 
-            <!-- Insights & Charts -->
-            <div class="col-lg-4">
-                <!-- Insights -->
-                <div class="chart-container">
-                    <h6 class="mb-3">
-                        <i class="bi bi-lightbulb-fill text-warning ms-2"></i>
+            <!-- Sidebar: Insights & Charts -->
+            <aside class="col-lg-4">
+                <!-- Quick Insights -->
+                <section aria-labelledby="insightsHeading" class="chart-container">
+                    <h2 id="insightsHeading" class="chart-title">
+                        <i class="bi bi-lightbulb-fill ms-2" aria-hidden="true"></i>
                         استنتاجات سريعة
-                    </h6>
-                    <div id="insightsContainer">
-                        <!-- Insights will be loaded here -->
+                    </h2>
+                    <div id="insightsContainer" role="list" aria-label="قائمة الاستنتاجات">
+                        <!-- Insights will be loaded dynamically -->
                     </div>
-                </div>
+                </section>
 
-                <!-- Chart -->
-                <div class="chart-container">
-                    <h6 class="mb-3">
-                        <i class="bi bi-pie-chart-fill text-primary ms-2"></i>
+                <!-- Category Distribution Chart -->
+                <section aria-labelledby="categoryChartHeading" class="chart-container">
+                    <h2 id="categoryChartHeading" class="chart-title">
+                        <i class="bi bi-pie-chart-fill ms-2" aria-hidden="true"></i>
                         توزيع الفئات
-                    </h6>
-                    <canvas id="categoryChart"></canvas>
-                </div>
+                    </h2>
+                    <canvas id="categoryChart" aria-label="مخطط دائري يوضح توزيع الفئات" role="img"></canvas>
+                </section>
 
                 <!-- City Comparison Chart -->
-                <div class="chart-container">
-                    <h6 class="mb-3">
-                        <i class="bi bi-bar-chart-fill text-success ms-2"></i>
+                <section aria-labelledby="cityChartHeading" class="chart-container">
+                    <h2 id="cityChartHeading" class="chart-title">
+                        <i class="bi bi-bar-chart-fill ms-2" aria-hidden="true"></i>
                         مقارنة المدن
-                    </h6>
-                    <canvas id="cityChart"></canvas>
-                </div>
-            </div>
+                    </h2>
+                    <canvas id="cityChart" aria-label="مخطط أعمدة يقارن بين المدن" role="img"></canvas>
+                </section>
+            </aside>
         </div>
-    </div> <script>
-        // ============================================
-        // إعدادات
-        // ============================================
-        const CONFIG = {
-            API_URL: 'https://script.google.com/macros/s/AKfycbzbLYN6pSJqGD_pnJz9icsqGHoT3PEXHlKra4CHk4xxxb-Y9Y6QHwTBRZU0Sm1Z9IAq/exec'
-        };
-
-        // ============================================
-        // متغيرات عامة
-        // ============================================
-        let analyticsData = null;
-        let currentKeyword = 'all';
-        let categoryChart = null;
-        let cityChart = null;
-
-        // ============================================
-        // تهيئة
-        // ============================================
-        document.addEventListener('DOMContentLoaded', function() {
-            loadAnalytics();
-        });
-
-        // ============================================
-        // API
-        // ============================================
-        async function fetchAPI(action, params = {}) {
-            try {
-                const url = new URL(CONFIG.API_URL);
-                url.searchParams.append('action', action);
-                Object.keys(params).forEach(key => {
-                    url.searchParams.append(key, params[key]);
-                });
-                
-                const response = await fetch(url.toString());
-                const result = await response.json();
-                
-                if (!result.success) throw new Error(result.error);
-                return result.data;
-            } catch (error) {
-                console.error('API Error:', error);
-                throw error;
-            }
-        }
-
-        // ============================================
-        // تحميل البيانات
-        // ============================================
-        async function loadAnalytics() {
-            showLoading(true);
-            
-            try {
-                analyticsData = await fetchAPI('getAnalytics', { keyword: currentKeyword });
-                
-                updateSummary(analyticsData.summary);
-                renderKeywordButtons(analyticsData.keywords);
-                renderCityBadges(analyticsData.cities);
-                renderTable(analyticsData);
-                renderInsights(analyticsData);
-                renderCharts(analyticsData);
-                
-            } catch (error) {
-                console.error('Load Error:', error);
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        async function refreshData() {
-            await loadAnalytics();
-        }
-
-        // ============================================
-        // اختيار الكلمة المفتاحية
-        // ============================================
-        function selectKeyword(keyword, btn) {
-            currentKeyword = keyword;
-            
-            // تحديث الأزرار
-            document.querySelectorAll('.keyword-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            loadAnalytics();
-        }
-
-        // ============================================
-        // عرض البيانات
-        // ============================================
-        function updateSummary(summary) {
-            document.getElementById('totalRecords').textContent = formatNumber(summary.totalRecords);
-            document.getElementById('totalCities').textContent = formatNumber(summary.totalCities);
-            document.getElementById('totalCategories').textContent = formatNumber(summary.totalCategories);
-            document.getElementById('totalKeywords').textContent = formatNumber(summary.totalKeywords);
-        }
-
-        function renderKeywordButtons(keywords) {
-            const container = document.getElementById('keywordButtons');
-            let html = `
-                <button class="btn keyword-btn ${currentKeyword === 'all' ? 'active' : ''}" 
-                        data-keyword="all" onclick="selectKeyword('all', this)">
-                    <i class="bi bi-grid-fill ms-1"></i> جميع الكلمات
-                </button>
-            `;
-            
-            keywords.forEach(kw => {
-                html += `
-                    <button class="btn keyword-btn ${currentKeyword === kw ? 'active' : ''}" 
-                            data-keyword="${escapeHtml(kw)}" 
-                            onclick="selectKeyword('${escapeHtml(kw)}', this)">
-                        ${escapeHtml(kw)}
-                    </button>
-                `;
-            });
-            
-            container.innerHTML = html;
-        }
-
-        function renderCityBadges(cities) {
-            const container = document.getElementById('cityBadges');
-            container.innerHTML = cities.map(city => 
-                `<span class="badge-city"><i class="bi bi-geo-alt ms-1"></i>${escapeHtml(city)}</span>`
-            ).join('');
-        }
-
-        function renderTable(data) {
-            const { report, cities } = data;
-            
-            // بناء الهيدر
-            const headerHtml = `
-                <tr>
-                    <th rowspan="2" style="min-width: 150px;">الكلمة المفتاحية</th>
-                    <th rowspan="2" style="min-width: 180px;">Category</th>
-                    ${cities.map(city => `
-                        <th colspan="2" class="city-header">${escapeHtml(city)}</th>
-                    `).join('')}
-                </tr>
-                <tr>
-                    ${cities.map(() => `
-                        <th style="min-width: 60px;">العدد</th>
-                        <th style="min-width: 70px;">النسبة</th>
-                    `).join('')}
-                </tr>
-            `;
-            document.getElementById('tableHeader').innerHTML = headerHtml;
-            
-            // تجميع البيانات حسب الكلمة المفتاحية والفئة
-            const grouped = {};
-            const keywordTotals = {};
-            
-            report.forEach(item => {
-                const key = `${item.keyword}|||${item.category}`;
-                if (!grouped[key]) {
-                    grouped[key] = {
-                        keyword: item.keyword,
-                        category: item.category,
-                        cities: {}
-                    };
-                }
-                grouped[key].cities[item.city] = {
-                    count: item.count,
-                    percentage: item.percentage
-                };
-                
-                // حساب إجماليات الكلمة المفتاحية لكل مدينة
-                if (!keywordTotals[item.keyword]) {
-                    keywordTotals[item.keyword] = {};
-                }
-                if (!keywordTotals[item.keyword][item.city]) {
-                    keywordTotals[item.keyword][item.city] = 0;
-                }
-                keywordTotals[item.keyword][item.city] += item.count;
-            });
-            
-            // بناء الصفوف
-            let bodyHtml = '';
-            let currentKw = '';
-            
-            Object.values(grouped).forEach((item, index) => {
-                const isNewKeyword = item.keyword !== currentKw;
-                currentKw = item.keyword;
-                
-                bodyHtml += `<tr>`;
-                
-                // خلية الكلمة المفتاحية (مع rowspan إذا كانت جديدة)
-                if (isNewKeyword) {
-                    const kwRows = Object.values(grouped).filter(g => g.keyword === item.keyword).length;
-                    bodyHtml += `
-                        <td class="keyword-cell" rowspan="${kwRows}">
-                            <i class="bi bi-key ms-1"></i>
-                            ${escapeHtml(item.keyword)}
-                        </td>
-                    `;
-                }
-                
-                // خلية الفئة
-                bodyHtml += `<td class="category-cell">${escapeHtml(item.category)}</td>`;
-                
-                // خلايا المدن
-                cities.forEach(city => {
-                    const cityData = item.cities[city] || { count: 0, percentage: 0 };
-                    const percentClass = getPercentageClass(cityData.percentage);
-                    
-                    bodyHtml += `
-                        <td class="count-cell">${cityData.count}</td>
-                        <td class="percentage-cell ${percentClass}">${cityData.percentage}%</td>
-                    `;
-                });
-                
-                bodyHtml += `</tr>`;
-            });
-            
-            // صف الإجمالي لكل كلمة مفتاحية
-            Object.keys(keywordTotals).forEach(kw => {
-                bodyHtml += `<tr class="total-row">`;
-                bodyHtml += `<td colspan="2"><i class="bi bi-calculator ms-1"></i>إجمالي "${escapeHtml(kw)}"</td>`;
-                
-                cities.forEach(city => {
-                    const total = keywordTotals[kw][city] || 0;
-                    bodyHtml += `
-                        <td>${total}</td>
-                        <td>100%</td>
-                    `;
-                });
-                
-                bodyHtml += `</tr>`;
-            });
-            
-            document.getElementById('tableBody').innerHTML = bodyHtml;
-        }
-
-        function renderInsights(data) {
-            const { report, cities } = data;
-            const container = document.getElementById('insightsContainer');
-            
-            if (report.length === 0) {
-                container.innerHTML = '<p class="text-muted">لا توجد بيانات كافية للتحليل</p>';
-                return;
-            }
-            
-            const insights = [];
-            
-            // أعلى فئة في كل مدينة
-            cities.forEach(city => {
-                const cityItems = report.filter(r => r.city === city);
-                if (cityItems.length > 0) {
-                    const topCategory = cityItems.reduce((max, item) => 
-                        item.percentage > max.percentage ? item : max
-                    );
-                    insights.push({
-                        type: 'success',
-                        icon: 'trophy',
-                        text: `<strong>${city}</strong>: الأعلى "${topCategory.category}" بنسبة <strong>${topCategory.percentage}%</strong>`
-                    });
-                }
-            });
-            
-            // مقارنة بين المدن
-            if (cities.length >= 2) {
-                const cityTotals = {};
-                report.forEach(item => {
-                    if (!cityTotals[item.city]) cityTotals[item.city] = 0;
-                    cityTotals[item.city] += item.count;
-                });
-                
-                const maxCity = Object.entries(cityTotals).reduce((max, [city, total]) => 
-                    total > max.total ? { city, total } : max, { city: '', total: 0 }
-                );
-                
-                insights.push({
-                    type: 'warning',
-                    icon: 'graph-up-arrow',
-                    text: `<strong>${maxCity.city}</strong> لديها أكبر عدد من النتائج (${maxCity.total} سجل)`
-                });
-            }
-            
-            container.innerHTML = insights.map(insight => `
-                <div class="insight-card ${insight.type}">
-                    <i class="bi bi-${insight.icon} ms-2"></i>
-                    ${insight.text}
-                </div>
-            `).join('');
-        }
-
-        function renderCharts(data) {
-            const { report, cities, categories } = data;
-            
-            // تدمير الرسوم السابقة
-            if (categoryChart) categoryChart.destroy();
-            if (cityChart) cityChart.destroy();
-            
-            // ألوان
-            const colors = [
-                '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6',
-                '#ec4899', '#06b6d4', '#84cc16', '#f97316', '#6366f1'
-            ];
-            
-            // رسم توزيع الفئات
-            const categoryTotals = {};
-            report.forEach(item => {
-                if (!categoryTotals[item.category]) categoryTotals[item.category] = 0;
-                categoryTotals[item.category] += item.count;
-            });
-            
-            const sortedCategories = Object.entries(categoryTotals)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 8);
-            
-            categoryChart = new Chart(document.getElementById('categoryChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: sortedCategories.map(c => c[0]),
-                    datasets: [{
-                        data: sortedCategories.map(c => c[1]),
-                        backgroundColor: colors,
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { font: { family: 'Cairo' }, boxWidth: 12 }
-                        }
-                    }
-                }
-            });
-            
-            // رسم مقارنة المدن
-            const cityTotals = {};
-            report.forEach(item => {
-                if (!cityTotals[item.city]) cityTotals[item.city] = 0;
-                cityTotals[item.city] += item.count;
-            });
-            
-            cityChart = new Chart(document.getElementById('cityChart'), {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(cityTotals),
-                    datasets: [{
-                        label: 'عدد السجلات',
-                        data: Object.values(cityTotals),
-                        backgroundColor: colors.slice(0, Object.keys(cityTotals).length),
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
-                }
-            });
-        }
-
-        // ============================================
-        // تصدير
-        // ============================================
-        function exportToCSV() {
-            if (!analyticsData || analyticsData.report.length === 0) {
-                alert('لا توجد بيانات للتصدير');
-                return;
-            }
-            
-            const { report, cities } = analyticsData;
-            
-            // بناء CSV
-            let csv = '\uFEFF'; // BOM for Arabic support
-            
-            // Header
-            csv += 'الكلمة المفتاحية,Category';
-            cities.forEach(city => {
-                csv += `,${city} - العدد,${city} - النسبة`;
-            });
-            csv += '\n';
-            
-            // Data
-            report.forEach(item => {
-                csv += `"${item.keyword}","${item.category}"`;
-                cities.forEach(city => {
-                    if (item.city === city) {
-                        csv += `,${item.count},${item.percentage}%`;
-                    }
-                });
-                csv += '\n';
-            });
-            
-            // Download
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `analytics_report_${new Date().toISOString().slice(0,10)}.csv`;
-            link.click();
-        }
-
-        // ============================================
-        // دوال مساعدة
-        // ============================================
-        function showLoading(show) {
-            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
-        }
-
-        function formatNumber(num) {
-            return new Intl.NumberFormat('ar-EG').format(num || 0);
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function getPercentageClass(percentage) {
-            if (percentage >= 20) return 'percentage-high';
-            if (percentage >= 10) return 'percentage-medium';
-            return 'percentage-low';
-        }
-    </script>
+    </main>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/analytics.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
 </body>
 

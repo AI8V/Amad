@@ -1,12 +1,39 @@
+/* ============================================
+   Dark Theme Variables
+   ============================================ */
+
 :root {
-  --primary-color: #2563eb;
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-light: #93c5fd;
   --secondary-color: #1e40af;
-  --accent-color: #3b82f6;
-  --success-color: #10b981;
-  --warning-color: #f59e0b;
-  --danger-color: #ef4444;
-  --dark-color: #1f2937;
-  --light-color: #f8fafc;
+  --accent-color: #60a5fa;
+  --success-color: #34d399;
+  --success-light: #064e3b;
+  --success-bright: #6ee7b7;
+  --warning-color: #fbbf24;
+  --warning-light: #78350f;
+  --danger-color: #f87171;
+  --danger-light: #7f1d1d;
+  --info-color: #22d3ee;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-card: #1e293b;
+  --bg-card-hover: #273549;
+  --bg-input: #1e293b;
+  --bg-table-header: linear-gradient(135deg, #1e40af, #1e3a8a);
+  --bg-table-row-hover: #273549;
+  --bg-light-box: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+  --border-color: #334155;
+  --border-light: #475569;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -14,15 +41,76 @@
 }
 
 body {
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  background: var(--bg-primary);
   min-height: 100vh;
+  color: var(--text-primary);
 }
 
-/* Navbar Styles */
+/* ============================================
+   Accessibility Improvements
+   ============================================ */
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.btn:focus-visible, .form-control:focus-visible, .form-select:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color);
+  color: white;
+  padding: 8px 16px;
+  z-index: 10000;
+  text-decoration: none;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner-custom {
+    animation: none;
+    border: 4px solid var(--primary-color);
+  }
+}
+
+/* ============================================
+   Navbar Styles
+   ============================================ */
 
 .navbar {
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-md);
 }
 
 .navbar-brand {
@@ -30,15 +118,25 @@ body {
   font-size: 1.5rem;
 }
 
-/* Cards */
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link.active {
+  color: #fff;
+}
+
+/* ============================================
+   Statistics Cards
+   ============================================ */
 
 .stat-card {
-  background: white;
+  background: var(--bg-card);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-md);
   transition: all 0.3s ease;
-  border: none;
+  border: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;
 }
@@ -50,13 +148,15 @@ body {
   right: 0;
   width: 100px;
   height: 100px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), transparent);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), transparent);
   border-radius: 0 0 0 100%;
 }
 
 .stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+  background: var(--bg-card-hover);
 }
 
 .stat-icon {
@@ -72,72 +172,117 @@ body {
 
 .stat-icon.blue {
   background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
 }
 
 .stat-icon.green {
   background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
 }
 
 .stat-icon.orange {
   background: linear-gradient(135deg, #f59e0b, #d97706);
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
 }
 
 .stat-icon.purple {
   background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
 }
 
 .stat-value {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--dark-color);
+  color: var(--text-primary);
+  margin-bottom: 0;
 }
 
 .stat-label {
-  color: #6b7280;
+  color: var(--text-muted) !important;
   font-size: 0.9rem;
+  margin-bottom: 0;
 }
 
-/* Search Section */
+/* ============================================
+   Search Section
+   ============================================ */
 
 .search-section {
-  background: white;
+  background: var(--bg-card);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-md);
   margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
 }
 
-.search-input {
+.search-input, .form-control, .form-select {
   border-radius: 12px;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--border-color);
   padding: 0.75rem 1rem;
   transition: all 0.3s ease;
+  background-color: var(--bg-input);
+  color: var(--text-primary);
 }
 
-.search-input:focus {
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+
+.search-input:focus, .form-control:focus, .form-select:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  background-color: var(--bg-input);
+  color: var(--text-primary);
 }
 
-/* Data Table */
+/* ============================================
+   Dropdown Arrow Fix for RTL
+   ============================================ */
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-size: 16px 12px;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  background-position: left 0.75rem center;
+}
+
+[dir="rtl"] .form-select, html[dir="rtl"] .form-select {
+  background-position: left 0.75rem center;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+}
+
+/* ============================================
+   Data Table
+   ============================================ */
 
 .table-container {
-  background: white;
+  background: var(--bg-card);
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.table-section {
+  margin-top: 2rem;
 }
 
 .table {
   margin-bottom: 0;
+  color: var(--text-primary);
 }
 
 .table thead {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: var(--bg-table-header);
   color: white;
 }
 
 .table thead th {
+  color: #ffffff;
   padding: 1rem;
   font-weight: 600;
   border: none;
@@ -146,45 +291,58 @@ body {
 
 .table tbody tr {
   transition: all 0.2s ease;
+  border-color: var(--border-color);
 }
 
 .table tbody tr:hover {
-  background-color: #f8fafc;
+  background-color: var(--bg-table-row-hover);
 }
 
 .table tbody td {
   padding: 1rem;
   vertical-align: middle;
-  border-color: #f1f5f9;
+  border-color: var(--border-color);
+  color: var(--text-primary);
 }
 
-/* Rating Stars */
-
-.rating-stars {
-  color: #fbbf24;
+.table > :not(caption) > * > * {
+  background-color: transparent;
 }
+
+/* ============================================
+   Badges
+   ============================================ */
 
 .rating-badge {
   background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: white;
+  color: var(--text-inverse);
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-weight: 600;
   font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
-/* Category Badge */
-
 .category-badge {
-  background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-  color: var(--secondary-color);
+  background: rgba(99, 102, 241, 0.25);
+  color: #c4b5fd;
   padding: 0.35rem 1rem;
   border-radius: 20px;
   font-weight: 500;
   font-size: 0.85rem;
+  border: 1px solid rgba(99, 102, 241, 0.4);
 }
 
-/* Action Buttons */
+.badge.bg-light {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* ============================================
+   Action Buttons
+   ============================================ */
 
 .btn-action {
   width: 36px;
@@ -198,41 +356,91 @@ body {
 }
 
 .btn-view {
-  background: #dbeafe;
-  color: var(--primary-color);
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--accent-color);
 }
 
 .btn-view:hover {
   background: var(--primary-color);
   color: white;
+  transform: scale(1.1);
 }
 
 .btn-edit {
-  background: #d1fae5;
+  background: rgba(16, 185, 129, 0.2);
   color: var(--success-color);
 }
 
 .btn-edit:hover {
-  background: var(--success-color);
+  background: #10b981;
   color: white;
+  transform: scale(1.1);
 }
 
 .btn-delete {
-  background: #fee2e2;
+  background: rgba(239, 68, 68, 0.2);
   color: var(--danger-color);
 }
 
 .btn-delete:hover {
-  background: var(--danger-color);
+  background: #ef4444;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border: none;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--primary-hover), var(--secondary-color));
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--border-color);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+.btn-reset {
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+
+.btn-light {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
 }
 
-/* Modal Styles */
+.btn-light:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* ============================================
+   Modal Styles
+   ============================================ */
 
 .modal-content {
   border-radius: 20px;
-  border: none;
+  border: 1px solid var(--border-color);
   overflow: hidden;
+  background: var(--bg-card);
 }
 
 .modal-header {
@@ -248,9 +456,76 @@ body {
 
 .modal-body {
   padding: 2rem;
+  background: var(--bg-card);
+  color: var(--text-primary);
 }
 
-/* Loading Spinner */
+.modal-footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+/* ============================================
+   Modal Content - High Contrast Fix
+   ============================================ */
+
+/* Fix: h3.text-primary in modal - use lighter blue */
+
+.modal-body h3.text-primary, .modal-body .text-primary, .modal-body h3[class*="text-primary"] {
+  color: #93c5fd !important;
+}
+
+/* Fix: Rating number in modal */
+
+.modal-body .h2.text-primary, .modal-body p.h2.text-primary, .modal-body .h2[class*="text-primary"] {
+  color: #93c5fd !important;
+}
+
+/* Fix: bg-light box in modal */
+
+.modal-body .bg-light, .modal-body div.bg-light {
+  background-color: var(--bg-tertiary) !important;
+}
+
+/* Fix: text-muted inside bg-light in modal */
+
+.modal-body .bg-light .text-muted, .modal-body .bg-light p.text-muted, .modal-body div.bg-light .text-muted {
+  color: #d1d5db !important;
+}
+
+/* Fix: Review score positive - needs dark text on light bg */
+
+.review-score.score-positive {
+  background: #065f46;
+  color: #6ee7b7 !important;
+}
+
+.review-score.score-neutral {
+  background: #78350f;
+  color: #fcd34d !important;
+}
+
+.review-score.score-negative {
+  background: #7f1d1d;
+  color: #fca5a5 !important;
+}
+
+/* ============================================
+   Form Labels
+   ============================================ */
+
+.form-label {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+label.form-label.fw-bold {
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Loading Spinner
+   ============================================ */
 
 .loading-overlay {
   position: fixed;
@@ -258,17 +533,21 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255,255,255,0.9);
+  background: rgba(15, 23, 42, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
 }
 
+.loading-overlay p {
+  color: var(--text-secondary) !important;
+}
+
 .spinner-custom {
   width: 60px;
   height: 60px;
-  border: 4px solid #e5e7eb;
+  border: 4px solid var(--border-color);
   border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -280,40 +559,26 @@ body {
   }
 }
 
-/* Review Card */
+/* ============================================
+   Review Card
+   ============================================ */
 
 .review-card {
-  background: #f8fafc;
+  background: var(--bg-secondary);
   border-radius: 12px;
   padding: 1rem;
   margin-bottom: 1rem;
   border-right: 4px solid var(--primary-color);
+  border-left: none;
 }
 
-.review-score {
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 0.8rem;
+.review-card time.text-muted, .review-card .text-muted {
+  color: var(--text-secondary) !important;
 }
 
-.score-positive {
-  background: #d1fae5;
-  color: #059669;
-}
-
-.score-neutral {
-  background: #fef3c7;
-  color: #d97706;
-}
-
-.score-negative {
-  background: #fee2e2;
-  color: #dc2626;
-}
-
-/* Empty State */
+/* ============================================
+   Empty State
+   ============================================ */
 
 .empty-state {
   text-align: center;
@@ -322,24 +587,50 @@ body {
 
 .empty-state i {
   font-size: 4rem;
-  color: #d1d5db;
+  color: var(--text-muted);
   margin-bottom: 1rem;
 }
 
-/* Pagination */
+.empty-state h3 {
+  color: var(--text-secondary);
+}
+
+.empty-state p {
+  color: var(--text-muted);
+}
+
+/* ============================================
+   Pagination
+   ============================================ */
 
 .pagination .page-link {
   border-radius: 10px;
   margin: 0 3px;
-  border: none;
-  color: var(--dark-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+.pagination .page-link:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+  color: var(--text-primary);
 }
 
 .pagination .page-item.active .page-link {
   background: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
-/* Toast */
+.pagination .page-item.disabled .page-link {
+  background: var(--bg-secondary);
+  color: #6b7280;
+  border-color: var(--border-color);
+}
+
+/* ============================================
+   Toast
+   ============================================ */
 
 .toast-container {
   position: fixed;
@@ -348,7 +639,225 @@ body {
   z-index: 9999;
 }
 
-/* Responsive */
+.toast {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.toast-body {
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Links & Text Colors
+   ============================================ */
+
+a {
+  color: var(--primary-light);
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+/* Text utilities - WCAG AA Compliant */
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.text-primary {
+  color: var(--primary-light) !important;
+}
+
+.text-light {
+  color: var(--text-primary) !important;
+}
+
+.text-info {
+  color: var(--info-color) !important;
+}
+
+/* ============================================
+   Table Specific Styles
+   ============================================ */
+
+/* Website links in table */
+
+.website-link {
+  color: var(--primary-light);
+  font-size: 0.85rem;
+}
+
+.website-link a {
+  color: var(--primary-light) !important;
+  text-decoration: none;
+}
+
+.website-link a:hover {
+  color: #bfdbfe !important;
+  text-decoration: underline;
+}
+
+.website-link .bi {
+  color: var(--primary-light);
+}
+
+/* Phone links */
+
+.phone-link {
+  color: var(--success-bright) !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.phone-link:hover {
+  color: #a7f3d0 !important;
+}
+
+.phone-link .bi {
+  color: var(--success-bright);
+}
+
+/* Table links */
+
+.table a, .table-container a {
+  color: var(--success-bright);
+}
+
+.table a:hover, .table-container a:hover {
+  color: #a7f3d0;
+}
+
+.table small.text-muted, .table-container small.text-muted {
+  color: var(--text-secondary) !important;
+}
+
+.table small a, .table-container small a {
+  color: var(--primary-light) !important;
+}
+
+.table small a:hover, .table-container small a:hover {
+  color: #bfdbfe !important;
+}
+
+/* Table icons */
+
+.table .bi.text-primary {
+  color: var(--accent-color) !important;
+}
+
+.table .bi.text-success {
+  color: var(--success-bright) !important;
+}
+
+.table .bi.text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* ============================================
+   Rating Stars
+   ============================================ */
+
+.rating-stars {
+  color: #fbbf24;
+}
+
+/* ============================================
+   Definition List in Modal
+   ============================================ */
+
+dl dt {
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+dl dd {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+/* ============================================
+   Backgrounds
+   ============================================ */
+
+.bg-light {
+  background-color: var(--bg-tertiary) !important;
+}
+
+/* ============================================
+   Form Elements
+   ============================================ */
+
+.form-text, .form-text.text-muted {
+  color: var(--text-secondary) !important;
+}
+
+.form-control::placeholder, .form-select::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+/* ============================================
+   Fieldset & Legend
+   ============================================ */
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+legend {
+  color: var(--text-primary);
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1rem;
+}
+
+/* ============================================
+   Scrollbar Styling
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-light);
+}
+
+.table-responsive {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-secondary);
+}
+
+/* ============================================
+   Select Options
+   ============================================ */
+
+.form-select option {
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
 
 @media (max-width: 768px) {
   .stat-value {
@@ -360,5 +869,100 @@ body {
   .table-responsive {
     font-size: 0.85rem;
   }
+}
+
+@media (max-width: 768px) {
+  .stat-card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-section {
+    padding: 1rem;
+  }
+}
+
+/* ============================================
+   High Contrast Mode
+   ============================================ */
+
+@media (prefers-contrast: high) {
+  .stat-card, .search-section, .table-container {
+    border: 2px solid var(--text-primary);
+  }
+}
+
+@media (prefers-contrast: high) {
+  .btn-action {
+    border: 2px solid currentColor;
+  }
+}
+
+/* ============================================
+   Modal Custom Elements - High Contrast
+   ============================================ */
+
+.modal-title-name {
+  color: #93c5fd;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.modal-link {
+  color: #93c5fd !important;
+}
+
+.modal-link:hover {
+  color: #bfdbfe !important;
+}
+
+.modal-divider {
+  border-color: var(--border-color);
+  opacity: 0.5;
+}
+
+.section-title {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Rating box in modal */
+
+.rating-box {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid var(--border-color);
+}
+
+.rating-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-bottom: 0.25rem;
+}
+
+.rating-count {
+  color: #d1d5db;
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
+
+.no-reviews {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 2rem;
+}
+
+.keywords-box {
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  padding: 1rem;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
 }
 
